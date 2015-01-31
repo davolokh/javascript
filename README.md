@@ -21,6 +21,7 @@
   1. [Accessors](#accessors)
   1. [Constructors](#constructors)
   1. [Modules](#modules)
+  1. [ExtJS](#extjs)
   1. [License](#license)
 
 ## Types
@@ -159,7 +160,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Strings
 
   - Use single quotes `''` for strings.
@@ -243,7 +243,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Functions
 
   - Function expressions:
@@ -282,8 +281,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
-
 ## Properties
 
   - Use dot notation when accessing properties.
@@ -317,7 +314,6 @@
     ```
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Variables
 
@@ -422,7 +418,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Hoisting
 
   - Variable declarations get hoisted to the top of their scope, their assignment does not.
@@ -511,8 +506,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
-
 ## Conditional Expressions & Equality
 
   - Use `===` and `!==` over `==` and `!=`.
@@ -560,7 +553,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Blocks
 
   - Use braces always.
@@ -585,7 +577,6 @@
     ```
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Comments
 
@@ -678,7 +669,6 @@
   ```
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Whitespace
 
@@ -869,7 +859,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Semicolons
 
   - **Yup.**
@@ -897,7 +886,6 @@
     [Read more](http://stackoverflow.com/a/7365214/1712802).
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Type Casting & Coercion
 
@@ -980,7 +968,6 @@
     ```
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Naming Conventions
 
@@ -1072,7 +1059,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Accessors
 
   - Accessor functions for properties are not required.
@@ -1125,7 +1111,6 @@
     ```
 
 **[⬆ back to top](#table-of-contents)**
-
 
 ## Constructors
 
@@ -1211,7 +1196,6 @@
 
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Modules
 
   - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated. [Explanation](https://github.com/airbnb/javascript/issues/44#issuecomment-13063933)
@@ -1239,6 +1223,54 @@
       global.FancyInput = FancyInput;
     }(this);
     ```
+
+**[⬆ back to top](#table-of-contents)**
+
+
+## ExtJS
+
+- Avoid inline handlers. They could decrease performance and lead to memory leaks. Also, it's hard to support such the code.
+
+  ```javascript
+  //bad
+  Ext.define('MyClass', {
+    ...
+
+    constructor: function(config) {
+        ...
+
+        this.store.on('load', function() {
+            ...
+        }, this);
+    }
+  });
+  
+  //good
+  Ext.define('MyClass', {
+    ...
+
+    constructor: function(config) {
+        ...
+
+        this.store.on('load', this.onStoreLoad, this);
+    },
+
+    onStoreLoad: function() {
+        ...
+    }
+  });
+  ```
+  
+- Do not use ```new``` for instansiation. ```Ext.create``` is preferable.
+
+  ```javascript
+  //bad 
+  var panel = new MyFancyPanel({...});
+  
+  //good
+  var panel = Ext.create('MyFancyPanel', {...});
+  
+  ```
 
 **[⬆ back to top](#table-of-contents)**
 
